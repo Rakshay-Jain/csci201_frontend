@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./LoginPage.css";
 
 export default function LoginPage() {
+  const [mode, setMode] = useState<"login" | "signup">("login");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -11,21 +12,57 @@ export default function LoginPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Mock authentication - replace with real auth logic
-    if (username === "user" && password === "password") {
-        // Simulate login success
+    if (mode === "login") {
+      // Mock login
+      if (username === "user" && password === "password") {
         navigate("/social");
+      } else if (username === "user") {
+        setError("Incorrect password");
+      } else {
+        setError("Invalid username");
+      }
     } else {
-        setError("Invalid username or password");
+      // Mock signup
+      if (username !== "user") {
+        console.log("Account created:", { username, password });
+        setMode("login");
+        setUsername("");
+        setPassword("");
+      } else {
+        setError("Username already exists");
+      }
     }
-    
   };
 
   return (
     <div className="login-page">
       <div className="login-container">
+
+        <div className="auth-toggle">
+          <button
+            className={mode === "login" ? "active" : ""}
+            onClick={() => {
+              setMode("login");
+              setError("");
+            }}
+          >
+            Login
+          </button>
+          <button
+            className={mode === "signup" ? "active" : ""}
+            onClick={() => {
+              setMode("signup");
+              setError("");
+            }}
+          >
+            Create Account
+          </button>
+        </div>
+
         <div className="login-header">
-          <h1 className="login-title">Login</h1>
+          <h1 className="login-title">
+            {mode === "login" ? "Login" : "Create Account"}
+          </h1>
           {/* <p className="login-subtitle">Sign in to your account</p> */}
         </div>
 
@@ -62,17 +99,15 @@ export default function LoginPage() {
 
           {error && <div className="error-message">{error}</div>}
 
-          <button type="submit" className="login-btn" name="action" value="login">
-            Login
+          <button type="submit" className="login-btn">
+            {mode === "login" ? "Login" : "Create Account"}
           </button>
         </form>
 
         <div className="login-footer">
-          <a href="https://www.google.com/" style={{fontFamily: 'DM Sans'}}>
-            Forgot password?
-          </a>
-          <br />
-          <button type="submit" className="guest-btn" onClick={() => navigate("/social")}>
+          <button className="guest-btn" 
+            onClick={() => navigate("/social")}
+          >
             Continue as Guest
           </button>
           <br />
