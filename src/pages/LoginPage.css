@@ -41,6 +41,42 @@
   box-sizing: border-box;
 }
 
+/* ── Toggle Buttons ──────────────────────────────────────────────────────── */
+.auth-toggle {
+  display: flex;
+  margin-bottom: 24px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 4px;
+  gap: 4px;
+}
+
+.auth-toggle button {
+  flex: 1;
+  padding: 10px 0;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.auth-toggle button:hover {
+  background: var(--surface);
+  color: var(--text-primary);
+}
+
+.auth-toggle button.active {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: var(--shadow-sm);
+}
+
 /* ── Header ──────────────────────────────────────────────────────────────── */
 .login-header {
   text-align: center;
